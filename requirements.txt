@@ -1,0 +1,8 @@
+# ARES dependencies. Tested with Python 3.11.
+# NOTE: torch and matplotlib's compiled extensions require NumPy 1.x, so we pin
+# numpy<2 to avoid the "compiled using NumPy 1.x cannot run in NumPy 2.x" crash.
+torch>=2.1
+numpy>=1.24,<2
+tiktoken>=0.5
+matplotlib>=3.7
+pytest>=7.4
