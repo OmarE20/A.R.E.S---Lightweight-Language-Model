@@ -57,45 +57,7 @@ scanning the source (ignoring comments/docstrings) for the banned names.
 
 ---
 
-## Setup
-
-Requires Python 3.10+.
-
-```bash
-# (recommended) create a virtual environment first
-python -m pip install -r requirements.txt
-```
-
-> **NumPy note:** `torch` and `matplotlib` ship extensions compiled against
-> NumPy 1.x, so `requirements.txt` pins `numpy<2`. With NumPy 2.x installed you
-> will see *"A module compiled using NumPy 1.x cannot run in NumPy 2.x"* — just
-> `pip install "numpy<2"`.
-
-On Windows the `make` targets map to these raw commands (use `py` if that's your
-launcher):
-
-| Task | `make` | raw command |
-|------|--------|-------------|
-| install deps | `make install` | `python -m pip install -r requirements.txt` |
-| download corpus | `make data` | `python -c "from config import Config; from data import download_corpus; download_corpus(Config().data_dir)"` |
-| train (defaults) | `make train` | `python train.py` |
-| smoke train | `make train-smoke` | `python train.py --tokenizer char --max_iters 500 --eval_interval 100 --warmup_iters 50` |
-| generate | `make generate` | `python generate.py --prompt "ROMEO:" --temperature 0.8` |
-| test | `make test` | `python -m pytest -q` |
-
-### First-run commands (download → train → generate)
-
-```bash
-python -m pip install -r requirements.txt
-python train.py --tokenizer char --max_iters 500 --eval_interval 100 --eval_iters 20 --warmup_iters 50
-python generate.py --prompt "ROMEO:" --max_new_tokens 300 --temperature 0.8
-```
-
-The corpus auto-downloads on the first `train.py` run; no manual data step needed.
-
----
-
-## Architecture summary (the interview surface)
+## Architecture summary
 
 ARES is a stack of `n_layers` identical **pre-norm** transformer blocks operating
 on a residual stream of width `d_model`. Token ids → embeddings → +positional
